@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 import os
-from flask import Flask, request, jsonify, url_for, send_from_directory
+from flask import Flask, request, jsonify, url_for, send_from_directory, json
 from flask_migrate import Migrate
 from flask_swagger import swagger
 from flask_cors import CORS
@@ -11,8 +11,8 @@ from api.models import db
 from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
+from flask_jwt_extended import JWTManager
 
-#from models import Person
 
 ENV = os.getenv("FLASK_ENV")
 static_file_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../public/')
@@ -32,6 +32,20 @@ db.init_app(app)
 
 # Allow CORS requests to this API
 CORS(app)
+
+# Setup the Flask-JWT-Extended extension
+app.config["JWT_SECRET_KEY"] = "super-secret"  # Change this!
+jwt = JWTManager(app)
+#CONFIGURATION EMAIL
+mail_settings = {
+    'MAIL_SERVER':'smtp.mailtrap.io',
+    'MAIL_PORT': 2525,
+    'MAIL_USERNAME': os.getenv('MAIL_USERNAME'),
+    'MAIL_PASSWORD': os.getenv('MAIL_PASSWORD'),
+    'MAIL_USE_TLS': True,
+    'MAIL_USE_SSL': False,
+    'MAIL_DEFAULT_SENDER': os.getenv('MAIL_USERNAME')
+}
 
 # add the admin
 setup_admin(app)
