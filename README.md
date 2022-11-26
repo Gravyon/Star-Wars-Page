@@ -1,4 +1,4 @@
-# Star Wars Page working with Star Wars API
+# Star Wars Page working with [Star Wars API](https://swapi.dev/api/)
 
 <p align="center">
 <a href="https://www.loom.com/share/f37c6838b3f1496c95111e515e83dd9b"><img src="https://i.imgur.com/P68VZ6v.png" /></a>
@@ -29,7 +29,7 @@ Add more files into your `./src/js/views` and import them in `./src/js/layout.js
 
 This boilerplate comes with a centralized general Context API. The file `./src/js/store/flux.js` has a base structure for the store, we encourage you to change it and adapt it to your needs.
 
-React Context [docs](https://reactjs.org/docs/context.html)
+React Context [docs](https://swapi.dev/api/)
 BreathCode Lesson [view](https://content.breatheco.de/lesson/react-hooks-explained)
 
 The `Provider` is already set. You can consume from any component using the useContext hook to get the `store` and `actions` from the Context. Check `/views/demo.js` to see a demo.
