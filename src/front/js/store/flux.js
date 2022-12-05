@@ -18,11 +18,14 @@ const getState = ({ getStore, getActions, setStore }) => {
       userProfile: async () => {
         const userToken = localStorage.getItem("token");
         try {
-          const response = await axios.get("/api/profile", {
-            headers: {
-              Authorization: "Bearer " + userToken,
-            },
-          });
+          const response = await axios.get(
+            process.env.NEXT_PUBLIC_SUPABASE_URL + "/api/profile",
+            {
+              headers: {
+                Authorization: "Bearer " + userToken,
+              },
+            }
+          );
           // console.log(data)
           setStore({
             profile: response.data.user,
@@ -38,11 +41,14 @@ const getState = ({ getStore, getActions, setStore }) => {
       checkToken: async () => {
         const userToken = localStorage.getItem("token");
         try {
-          const response = await axios.get("/api/valid-token", {
-            headers: {
-              Authorization: "Bearer " + userToken,
-            },
-          });
+          const response = await axios.get(
+            process.env.NEXT_PUBLIC_SUPABASE_URL + "/api/valid-token",
+            {
+              headers: {
+                Authorization: "Bearer " + userToken,
+              },
+            }
+          );
           // console.log(data)
           setStore({
             auth: response.data.status,
@@ -64,19 +70,22 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       register: async (username, name, lastname, password, email) => {
         try {
-          const response = await fetch("/api/user", {
-            method: "POST",
-            body: JSON.stringify({
-              username: username,
-              name: name,
-              lastname: lastname,
-              email: email,
-              password: password,
-            }),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          });
+          const response = await fetch(
+            process.env.NEXT_PUBLIC_SUPABASE_URL + "/api/user",
+            {
+              method: "POST",
+              body: JSON.stringify({
+                username: username,
+                name: name,
+                lastname: lastname,
+                email: email,
+                password: password,
+              }),
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
           if (response.status === 200) {
             const data = await response.json();
             localStorage.setItem("token", data.msg);
@@ -92,10 +101,13 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       login: async (email, password) => {
         try {
-          const response = await axios.post("/api/login", {
-            email: email,
-            password: password,
-          });
+          const response = await axios.post(
+            process.env.NEXT_PUBLIC_SUPABASE_URL + "/api/login",
+            {
+              email: email,
+              password: password,
+            }
+          );
           localStorage.setItem("token", response.data.msg);
           // console.log(data)
           setStore({
