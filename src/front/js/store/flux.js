@@ -19,7 +19,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         const userToken = localStorage.getItem("token");
         try {
           const response = await axios.get(
-            process.env.NEXT_PUBLIC_SUPABASE_URL + "/api/profile",
+            process.env.BACKEND_URL + "/api/profile",
             {
               headers: {
                 Authorization: "Bearer " + userToken,
@@ -42,7 +42,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         const userToken = localStorage.getItem("token");
         try {
           const response = await axios.get(
-            process.env.NEXT_PUBLIC_SUPABASE_URL + "/api/valid-token",
+            process.env.BACKEND_URL + "/api/valid-token",
             {
               headers: {
                 Authorization: "Bearer " + userToken,
@@ -70,22 +70,19 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       register: async (username, name, lastname, password, email) => {
         try {
-          const response = await fetch(
-            process.env.NEXT_PUBLIC_SUPABASE_URL + "/api/user",
-            {
-              method: "POST",
-              body: JSON.stringify({
-                username: username,
-                name: name,
-                lastname: lastname,
-                email: email,
-                password: password,
-              }),
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }
-          );
+          const response = await fetch(process.env.BACKEND_URL + "/api/user", {
+            method: "POST",
+            body: JSON.stringify({
+              username: username,
+              name: name,
+              lastname: lastname,
+              email: email,
+              password: password,
+            }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
           if (response.status === 200) {
             const data = await response.json();
             localStorage.setItem("token", data.msg);
@@ -102,7 +99,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       login: async (email, password) => {
         try {
           const response = await axios.post(
-            process.env.NEXT_PUBLIC_SUPABASE_URL + "/api/login",
+            process.env.BACKEND_URL + "/api/login",
             {
               email: email,
               password: password,
